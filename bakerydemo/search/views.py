@@ -17,7 +17,7 @@ def search(request):
             # In production, use ElasticSearch and a simplified search query, per
             # https://docs.wagtail.org/en/stable/topics/search/backends.html
             # like this:
-            search_results = Page.objects.live().search(search_query)
+            search_results = Page.objects.live().search(search_query).annotate_score("score")
         else:
             # If we aren't using ElasticSearch for the demo, fall back to native db search.
             # But native DB search can't search specific fields in our models on a `Page` query.

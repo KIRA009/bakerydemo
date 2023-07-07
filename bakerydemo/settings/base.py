@@ -187,10 +187,37 @@ GOOGLE_MAP_API_KEY = "AIzaSyD31CT9P9KxvNUJOwDq2kcFEIG8ADgaFgw"
 # Use Elasticsearch as the search backend for extra performance and better search results
 WAGTAILSEARCH_BACKENDS = {
     "default": {
-        "BACKEND": "wagtail.search.backends.database",
-        "INDEX": "bakerydemo",
-    },
+        "BACKEND": "wagtail.search.backends.elasticsearch6",
+        "URLS": ["http://localhost:9200"],
+        "INDEX": "wagtail",
+        "TIMEOUT": 5,
+        "OPTIONS": {},
+        "INDEX_SETTINGS": {
+            "settings": {
+                "index": {"number_of_shards": 1, "number_of_replicas": 0},
+                "analysis": {
+                    "analyzer": {
+                        "default": {
+                            "tokenizer": "whitespace",
+                            "filter": [
+                                "lowercase",
+                                "porter_stem",
+                                "english_stop_words",
+                            ],
+                        },
+                    },
+                    "filter": {
+                        "english_stop_words": {
+                            "type": "stop",
+                            "stopwords": "_english_",
+                        },
+                    },
+                },
+            },
+        },
+    }
 }
+
 
 # Wagtail settings
 WAGTAIL_SITE_NAME = "bakerydemo"

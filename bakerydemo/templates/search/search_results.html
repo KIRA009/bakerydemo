@@ -20,7 +20,7 @@
                                         </figure>
                                     {% endif %}
                                     <div class="listing-card__contents">
-                                        <h3 class="listing-card__title">{{ result.specific }}</h3>
+                                        <h3 class="listing-card__title">{{ result.specific }} {{ result.score }}</h3>
                                         <p class="listing-card__content-type">
                                             {% if result.specific.content_type.model == "blogpage" %}
                                                 Blog Post

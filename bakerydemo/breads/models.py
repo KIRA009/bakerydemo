@@ -85,6 +85,7 @@ class BreadPage(Page):
     """
 
     introduction = models.TextField(help_text="Text to describe the page", blank=True)
+    introduction_2 = models.TextField(help_text="Text to describe the page", blank=True)
     image = models.ForeignKey(
         "wagtailimages.Image",
         null=True,
@@ -119,6 +120,7 @@ class BreadPage(Page):
 
     content_panels = Page.content_panels + [
         FieldPanel("introduction"),
+        FieldPanel("introduction_2"),
         FieldPanel("image"),
         FieldPanel("body"),
         FieldPanel("origin"),
@@ -136,7 +138,8 @@ class BreadPage(Page):
     ]
 
     search_fields = Page.search_fields + [
-        index.SearchField("body"),
+        index.SearchField("introduction", boost=5),
+        index.SearchField("introduction_2", boost=2),
     ]
 
     parent_page_types = ["BreadsIndexPage"]
